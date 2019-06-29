@@ -11,11 +11,11 @@ var mongoose = require("mongoose");
 
 var app = express();
 var PORT = process.env.PORT || 3000;
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://darkyer:yEralin2@ds037468.mlab.com:37468/heroku_8nmbv0mz";
 
 mongoose.connect(MONGODB_URI);
 
-
+  
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
