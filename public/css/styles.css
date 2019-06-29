@@ -1,0 +1,17 @@
+.news-div{
+    background-color:#f4f4f4;
+}
+
+h6{
+    display: inline !important;
+    vertical-align: middle !important;
+}
+
+.logo{
+    box-shadow: none !important;
+}
+
+.error-site{
+    margin-top:140px;
+    height:400px;
+}

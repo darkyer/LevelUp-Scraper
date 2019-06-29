@@ -63,7 +63,8 @@ module.exports = function (app) {
             db.scrapedData.insert(
               {
                 title: title,
-                link: link
+                link: link,
+                comments: []
               },
               function (err, inserted) {
                 if (err) {
@@ -107,10 +108,30 @@ module.exports = function (app) {
     });
   });
 
-  // // Render 404 page for any unmatched routes
-  // app.get("*", function (req, res) {
-  //   res.render("404");
-  // });
+  app.post("/addcomment/:id", function (req, res) {
+    // We just have to specify which todo we want to destroy with "where"
+    // console.log("adding comment id:"+req.params.id+ " comment: "+ req.body.comment);
+    // db.scrapedData.find({ _id: req.params.id }).insert({ comment: req.body.comment });
+    db.scrapedData.update({ _id: mongojs.ObjectId(req.params.id) }, { $push: { comments: req.body.comment } }, function () {
+      console.log("Update for " + req.params.id + "... done");
+    });
+    res.redirect("/#comments");
+  });
+
+  app.post("/deletecomment/:id/:comment", function (req, res) {
+    // We just have to specify which todo we want to destroy with "where"
+    // console.log("adding comment id:"+req.params.id+ " comment: "+ req.body.comment);
+    // db.scrapedData.find({ _id: req.params.id }).insert({ comment: req.body.comment });
+    db.scrapedData.update({ _id: mongojs.ObjectId(req.params.id) }, { $pull: { comments: req.params.comment } }, function () {
+      console.log("Delete for " + req.params.id + "... done");
+    });
+    res.redirect("/#comments");
+  });
+
+  // Render 404 page for any unmatched routes
+  app.get("*", function (req, res) {
+    res.render("404");
+  });
 
   app.get("/scrap", function (req, res) {
     ScrapeNews(function (data) {

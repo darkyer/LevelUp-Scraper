@@ -4768,7 +4768,7 @@ input[type="button"].btn-block {
 }
 
 .navbar-light .navbar-brand {
-  color: rgba(0, 0, 0, 0.9);
+  color: rgba(1, 1, 0, 0.9);
 }
 
 .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
@@ -10601,7 +10601,7 @@ hr.light {
 #mainNav {
   -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.85) !important;
   -webkit-transition: background-color 0.2s ease;
   transition: background-color 0.2s ease;
 }
@@ -10609,7 +10609,10 @@ hr.light {
 #mainNav .navbar-brand {
   font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-weight: 700;
-  color: #212529;
+  color: #0f0f0f;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 }
 
 #mainNav .navbar-nav .nav-item .nav-link {
@@ -10617,7 +10620,7 @@ hr.light {
   font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-weight: 700;
   font-size: 0.9rem;
-  padding: 0.75rem 0;
+  /* padding: 0.75rem 0; */
 }
 
 #mainNav .navbar-nav .nav-item .nav-link:hover, #mainNav .navbar-nav .nav-item .nav-link:active {
@@ -10630,14 +10633,12 @@ hr.light {
 
 @media (min-width: 992px) {
   #mainNav {
-    -webkit-box-shadow: none;
-    box-shadow: none;
     background-color: transparent;
   }
-  #mainNav .navbar-brand {
+  /* #mainNav .navbar-brand {
     color: rgba(255, 255, 255, 0.7);
-  }
-  #mainNav .navbar-brand:hover {
+  } */
+  /* #mainNav .navbar-brand:hover {
     color: #fff;
   }
   #mainNav .navbar-nav .nav-item .nav-link {
@@ -10646,7 +10647,7 @@ hr.light {
   }
   #mainNav .navbar-nav .nav-item .nav-link:hover {
     color: #fff;
-  }
+  } */
   #mainNav .navbar-nav .nav-item:last-child .nav-link {
     padding-right: 0;
   }
@@ -10673,7 +10674,8 @@ header.masthead {
   padding-top: 10rem;
   padding-bottom: calc(10rem - 72px);
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(92, 77, 66, 0.8)), to(rgba(92, 77, 66, 0.8))), url("../img/bg-masthead.jpg");
-  background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("../img/bg-masthead.jpg");
+  /**background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("../img/bg-masthead.jpg");**/
+  background: linear-gradient(to bottom,rgba(39, 39, 39, 0.8) 0%, rgba(39, 39, 39, 0.8) 100%), url(../img/bg-masthead.jpg) !important;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
