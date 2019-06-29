@@ -11,11 +11,12 @@ var mongoose = require("mongoose");
 
 var app = express();
 var PORT = process.env.PORT || 3000;
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://darkyer:yEralin2@ds037468.mlab.com:37468/heroku_8nmbv0mz";
 
-mongoose.connect(MONGODB_URI);
+mongoose.Promise = global.Promise;
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://darkyer:yEralin2@ds037468.mlab.com:37468/heroku_8nmbv0mz" 
+);
 
-  
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
