@@ -1,6 +1,3 @@
-// var db = require("./../models/data");
-
-
 module.exports = function (app) {
 
 
@@ -128,10 +125,6 @@ module.exports = function (app) {
     res.redirect("/#comments");
   });
 
-  // Render 404 page for any unmatched routes
-  app.get("*", function (req, res) {
-    res.render("404");
-  });
 
   app.get("/scrap", function (req, res) {
     ScrapeNews(function (data) {
@@ -145,8 +138,12 @@ module.exports = function (app) {
     GetAllScrapedData(function (data) {
       res.json(data);
     });
-
-
   });
+
+  // Render 404 page for any unmatched routes
+  app.get("*", function (req, res) {
+    res.render("404");
+  });
+
 
 };
