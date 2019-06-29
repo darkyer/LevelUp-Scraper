@@ -10,7 +10,7 @@ var mongoose = require("mongoose");
 // var db = require("./models");
 
 var app = express();
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 37468;
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
@@ -45,6 +45,7 @@ if (process.env.NODE_ENV === "test") {
 // Starting the server, syncing our models ------------------------------------/
 
 app.listen(PORT, function () {
+  console.log(process.env.MONGODB_URI+" ***************");
   console.log(
     "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
     PORT,
