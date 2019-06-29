@@ -10,7 +10,7 @@ var mongoose = require("mongoose");
 // var db = require("./models");
 
 var app = express();
-var PORT = 37468;
+var PORT = process.env.PORT || 37468;
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
