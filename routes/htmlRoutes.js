@@ -9,32 +9,25 @@ module.exports = function (app) {
   var databaseUrl = "scraper";
   var collections = ["scrapedData"];
 
-  // Hook mongojs configuration to the db variable
-  var db = mongojs(databaseUrl, collections);
-  db.on("error", function (error) {
-    console.log("Database Error:", error);
-  });
-
-  db.once("open", function () {
-    console.log("Mongoose connection successful.");
-  });
+  var data = require("./../models/data.js");
 
   function DropScrapData(callback) {
-    db.scrapedData.remove({}, function (err, delOK) {
+    data.remove({}, function (err, delOK) {
       if (err) {
         throw err;
       }
       if (delOK) {
         console.log("Collection deleted****************************************");
-        db.createCollection("scrapedData", function () {
+        data.createCollection(function () {
           callback();
         });
       }
     });
+
   }
 
   function GetAllScrapedData(callback) {
-    db.scrapedData.find({}, function (error, found) {
+    data.find({}, function (error, found) {
       // Throw any errors to the console
       if (error) {
         console.log(error);
@@ -43,41 +36,46 @@ module.exports = function (app) {
       else {
         callback(found);
       }
-    });
+    }
+    ).sort({ _id: 1 });
   }
 
   function ScrapeNews(callback) {
 
     DropScrapData(function () {
+
       axios.get("https://www.levelup.com/").then(function (response) {
         var $ = cheerio.load(response.data);
 
         $(".newswrap article").each(function (i, element) {
-          var title = $(element).find("a").attr("title");
-          var link = $(element).find("a").attr("href");
 
-          if (title && link) {
-            db.scrapedData.insert(
+          var scrapTitle = $(element).find("a").attr("title");
+          var scrapLink = $(element).find("a").attr("href");
+
+          if (scrapTitle && scrapLink) {
+            var dataToInsert = (
               {
-                title: title,
-                link: link,
+                title: scrapTitle,
+                link: scrapLink,
                 comments: []
-              },
-              function (err, inserted) {
-                if (err) {
-                  // Log the error if one is encountered during the query
-                  console.log(err);
-                }
-                else {
-                  // Otherwise, log the inserted data
-                  console.log(inserted);
-                }
               }
             );
+            console.log("data to insert----");
+            console.log(dataToInsert);
+            data.create(dataToInsert, function (err, inserted) {
+              if (err) {
+                // Log the error if one is encountered during the query
+                console.log(err);
+              }
+              else {
+                // Otherwise, log the inserted data
+                console.log(inserted);
+              }
+            });
           }
         });
 
-        db.scrapedData.find({}, function (error, found) {
+        data.find({}, function (error, found) {
           // Throw any errors to the console
           if (error) {
             console.log(error);
@@ -86,7 +84,8 @@ module.exports = function (app) {
           else {
             callback(found);
           }
-        });
+        }
+        );
 
       });
     });
@@ -106,23 +105,37 @@ module.exports = function (app) {
   });
 
   app.post("/addcomment/:id", function (req, res) {
-    // We just have to specify which todo we want to destroy with "where"
-    // console.log("adding comment id:"+req.params.id+ " comment: "+ req.body.comment);
-    // db.scrapedData.find({ _id: req.params.id }).insert({ comment: req.body.comment });
-    db.scrapedData.update({ _id: mongojs.ObjectId(req.params.id) }, { $push: { comments: req.body.comment } }, function () {
-      console.log("Update for " + req.params.id + "... done");
+
+    data.updateOne({ _id: mongojs.ObjectId(req.params.id) }, { $push: { comments: req.body.comment } }, function (error, success) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Adding comment " + req.body.comment + " for id: " + req.params.id + "... done");
+      }
     });
+
     res.redirect("/#comments");
   });
 
-  app.post("/deletecomment/:id/:comment", function (req, res) {
-    // We just have to specify which todo we want to destroy with "where"
-    // console.log("adding comment id:"+req.params.id+ " comment: "+ req.body.comment);
-    // db.scrapedData.find({ _id: req.params.id }).insert({ comment: req.body.comment });
-    db.scrapedData.update({ _id: mongojs.ObjectId(req.params.id) }, { $pull: { comments: req.params.comment } }, function () {
-      console.log("Delete for " + req.params.id + "... done");
+  app.post("/deletecomment/:id/:commentid", function (req, res) {
+    var indexVal = "comments." + req.params.commentid;
+    data.findOneAndUpdate({ _id: mongojs.ObjectId(req.params.id) }, { $set: { [indexVal]: null } }, function (error) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("setting for removal " + req.params.id + " val: " + indexVal + " ... done");
+        data.findOneAndUpdate({ _id: mongojs.ObjectId(req.params.id) }, { $pull: { comments: null } }, function (error) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log("Deleting comment in " + req.params.id + " position: " + req.params.commentid + " ... done");
+            res.redirect("/#comments");
+          }
+
+        });
+      }
+
     });
-    res.redirect("/#comments");
   });
 
 

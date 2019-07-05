@@ -10,11 +10,11 @@ var mongoose = require("mongoose");
 // var db = require("./models");
 
 var app = express();
-var PORT = process.env.PORT || 37468;
+var PORT = process.env.PORT || 3000;
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://darkyer:yEralin2@ds037468.mlab.com:37468/heroku_8nmbv0mz" 
+  process.env.MONGODB_URI || "mongodb://darkyer:yEralin2@ds037468.mlab.com:37468/heroku_8nmbv0mz" ,  { useNewUrlParser: true }
 );
 
 // Middleware
@@ -45,7 +45,6 @@ if (process.env.NODE_ENV === "test") {
 // Starting the server, syncing our models ------------------------------------/
 
 app.listen(PORT, function () {
-  console.log("/*/*/*"+process.env.PORT+"/*/*/*");
   console.log(
     "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
     PORT,

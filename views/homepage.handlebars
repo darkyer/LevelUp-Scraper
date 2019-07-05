@@ -69,7 +69,7 @@
                     {{#each comments}}
                     <div class="card card-body my-4">
                         <h6 class="my-4">{{this}}</h6>
-                        <form action="/deletecomment/{{../_id}}/{{this}}" method="POST">
+                        <form action="/deletecomment/{{../_id}}/{{@index}}" method="POST">
                             <button type="submit" class="btn btn-danger btn-block" style="float:right;"><i
                                     class="fas fa-trash-alt"></i>
                                 Delete</button>
