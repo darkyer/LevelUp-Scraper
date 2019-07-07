@@ -50,18 +50,21 @@ module.exports = function (app) {
         $(".newswrap article").each(function (i, element) {
 
           var scrapTitle = $(element).find("a").attr("title");
-          var scrapLink = $(element).find("a").attr("href");
+          var scrapLink = "https://www.levelup.com" + $(element).find("a").attr("href");
+          var scrapImage  = $(element).find("span").attr("style");
+          var scrapImageUrl = scrapImage.split("'");
 
           if (scrapTitle && scrapLink) {
             var dataToInsert = (
               {
                 title: scrapTitle,
                 link: scrapLink,
+                imagelink: scrapImageUrl[1],
                 comments: []
               }
             );
-            console.log("data to insert----");
-            console.log(dataToInsert);
+            // console.log("data to insert----");
+            // console.log(dataToInsert);
             data.create(dataToInsert, function (err, inserted) {
               if (err) {
                 // Log the error if one is encountered during the query
@@ -69,7 +72,7 @@ module.exports = function (app) {
               }
               else {
                 // Otherwise, log the inserted data
-                console.log(inserted);
+                // console.log(inserted);
               }
             });
           }

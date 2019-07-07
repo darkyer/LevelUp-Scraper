@@ -7,6 +7,15 @@ h6{
     vertical-align: middle !important;
 }
 
+
+h6 a:hover{
+    text-decoration: none;
+}
+
+h6 a:visited{
+    color: rgb(29, 117, 158);
+}
+
 .logo{
     box-shadow: none !important;
 }
@@ -14,4 +23,11 @@ h6{
 .error-site{
     margin-top:140px;
     height:400px;
+}
+
+.imageNews{
+    width:80px;
+    height:80px;
+    object-fit: cover;
+    border-radius: 10000px;
 }

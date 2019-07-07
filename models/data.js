@@ -16,6 +16,13 @@ var DataSchema = new Schema({
 		required: "String is Required"
 	},
 
+	imagelink: {
+		type: String,
+		trim: true,
+		required: "String is Required"
+	},
+
+
 	comments: Array
 });
 
