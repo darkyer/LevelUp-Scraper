@@ -49,7 +49,7 @@ module.exports = function (app) {
 
         $(".newswrap article").each(function (i, element) {
 
-          var scrapTitle = $(element).find("a").attr("title");
+          var scrapTitle = $(element).find("a").attr("title").replace("</em>","").replace("<em>","");
           var scrapLink = "https://www.levelup.com" + $(element).find("a").attr("href");
           var scrapImage  = $(element).find("span").attr("style");
           var scrapImageUrl = scrapImage.split("'");
